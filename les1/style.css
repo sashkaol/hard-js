@@ -1,0 +1,66 @@
+* {
+    font-family: 'Comfortaa', cursive;
+    background-color: whitesmoke;
+}
+
+.btn-cart {
+    width: 150px;
+    height: 75px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 5px 5px 0 lightslategray;
+    outline: none;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+    transition: ease-out 0.15s;
+    right: 10px;
+}
+
+.btn-cart:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 2px 0 lightslategray;
+    top: 15px;
+    transition: ease-out 0.15s;
+}
+
+.products {
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.product-item {
+    position: relative;
+    border-radius: 30px;
+    box-shadow: 0 2px 2px 0 lightslategrey;
+    width: 300px;
+    height: 300px;
+    padding: 30px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.by-btn {
+    border-radius: 10px;
+    box-shadow: 0 4px 5px 0 lightslategrey;
+    background-color: white;
+    width: 200px;
+    height: 40px;
+    outline: none;
+    border: none;
+    position: absolute;
+    top: 150px;
+    transition: ease-out 0.1s;
+}
+
+.by-btn:hover {
+    cursor: pointer;
+    box-shadow: 0 1.5px 2px 0 lightslategrey;
+    top: 152px;
+    transition: ease-out 0.1s;
+}
+
+

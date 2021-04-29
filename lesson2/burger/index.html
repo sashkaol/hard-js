@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burger</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="burger-choice">
+        <div class="burger">
+            <input type="radio" name="burger-size" id="small" checked value="small">
+            <label for="small">Маленький бургер (50 руб., 20 калорий)</label>
+            <input type="radio" name="burger-size" id="big" value="big">
+            <label for="big">Большой бургер (100 рублей, 40 калорий)</label>
+        </div>
+        <div class="burger-additive">
+            <div class="category">
+                <input type="radio" name="burger-adds" id="cheese" value="cheese" checked>
+                <label for="cheese">С сыром (+10 рублей, +20 калорий)</label>
+            </div>
+            <div class="category">
+                <input type="radio" name="burger-adds" id="salad" value="salad">
+                <label for="salad">С салатом (+20 рублей, +5 калорий)</label>
+            </div>
+            <div class="category">
+                <input type="radio" name="burger-adds" id="potato" value="potato">
+                <label for="potato">С картофелем (+15 рублей, +10 калорий)</label>
+                
+            </div>
+            <div class="category">
+                <input type="checkbox" name="burger-adds" id="sauce" value="sauce">
+                <label for="sauce">Посыпать приправой (+15 рублей, +0 калорий)</label>
+            </div>
+            <div class="category">
+                <input type="checkbox" name="burger-adds" id="mayo" value="mayo">
+                <label for="mayo">Полить майонезом (+20 рублей, +5 калорий)</label>
+            </div>
+        </div>
+        <button id="choice">Заказать</button>
+        <div id="rez" class="result"></div>
+        <div id="rezz" class="result"></div>
+    </div>
+    <script src="burger.js"></script>
+</body>
+</html>

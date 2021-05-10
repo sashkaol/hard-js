@@ -14,7 +14,7 @@ const renderProduct = (title = 'Товар...', price = 'Цена не указ�
               </div>`;
 };
 
-let productArr = [];
+/*let productArr = [];
 
 for (let i = 0; i < products.length; i++) {
     let price = products[i]['price'];
@@ -23,7 +23,15 @@ for (let i = 0; i < products.length; i++) {
     productArr.push(product);
 }
 
-document.getElementsByClassName('products')[0].innerHTML = productArr.join('');
+document.getElementsByClassName('products')[0].innerHTML = productArr.join('');*/
+
+for (let i = 0; i < products.length; i++) {
+    let price = products[i]['price'];
+    let title = products[i]['title'];
+    let product = document.createElement('div');
+    product.innerHTML = renderProduct(title, price);
+    document.getElementsByClassName('products')[0].append(product);
+}
 
 
 /*const renderProducts = (list = []) => {

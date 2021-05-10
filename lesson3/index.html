@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 3</title>
+</head>
+<body>
+<div id="ajax-block"></div>
+<button id="ajax-get">Async get data</button>
+<script>
+    // let userJson = '{"name": "Vasya", "age": 25, "isAdmin": true}'; // {name: 'Vasya', age: 25, isAdmin: true};
+    // // console.log(userJson);
+    // let user = JSON.parse(userJson);
+    // // console.log(user);
+    //
+    // user.dateCreated = '2017-06-15';
+    // user.address = {
+    //     city: 'Moscow',
+    //     postalCode: 109400,
+    // }
+    // user.city = 'New York';
+    //
+    // // console.log(user);
+    //
+    // let editedUser = JSON.stringify(user, ['name', 'dateCreated', 'age', 'isAdmin', 'address', 'city', 'postalCode'], 4);
+    // // console.log(editedUser);
+    //
+    // let newUser = JSON.parse(editedUser, (key, value) => {
+    //     if (key === 'dateCreated') value = new Date(value)
+    //
+    //     return value;
+    // });
+    //
+    // console.log(newUser);
+
+    // const num = () => {
+    //     let b;
+    //
+    //     setTimeout(() => {
+    //         b = 20;
+    //     }, 1500);
+    //
+    //     return b;
+    // }
+    // console.log(num()); // ?
+
+    // const num = (num, cb) => { // cb => (data) => console.log(data)
+    //     setTimeout(() => {
+    //         cb(20 + num); // => data
+    //     }, 1500);
+    // }
+    // // function callBackForResult(data) {
+    // //     console.log(data);
+    // // }
+    // // num(callBackForResult);
+    // // num(100, (data) => console.log(data)); // => num( 100 -> num, ф-я -> cb)
+    // num(100, function (data) {
+    //         console.log(data);
+    //     }
+    // );
+
+    // let num = (a) => {
+    //     return new Promise((resolve, reject) => { // resolve => .then(); reject => .catch()
+    //         setTimeout(() => {
+    //             if (a) resolve(20 + a);
+    //             else reject('Error =(');
+    //         }, 1000);
+    //     });
+    // }
+    // num(10)
+    //     .then((data) => { // => resolve
+    //         console.log(data);
+    //     })
+    //     .catch((error) => { // => reject
+    //         console.log(error);
+    //     });
+    // console.log(123);
+
+    document.querySelector('#ajax-get').addEventListener('click', () => {
+        // ES5
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('GET', 'tel.json', true); // true - асинхронный запрос // https://api.myapp.com
+        //
+        // xhr.onreadystatechange = function () {
+        //     // xhr.readyState
+        //     // 0 - запрос не инициализирован
+        //     // 1 - загрузка данных
+        //     // 2 - запрос принят сервером
+        //     // 3 - идет обмен данным
+        //     // 4 - запрос выполнен
+        //
+        //     if (xhr.readyState !== 4) return;
+        //
+        //     if (xhr.status !== 200) {
+        //         console.log('Error: ' + xhr.status + ' ' + xhr.statusText);
+        //     } else {
+        //         // console.log(xhr.responseText);
+        //         let data = JSON.parse(xhr.responseText);
+        //         // let block = document.querySelector('#ajax-block');
+        //         // console.log(block);
+        //         document.querySelector('#ajax-block').insertAdjacentHTML('afterbegin', `<p>${data.name} - <strong>${data.tel}</strong></p>`);
+        //     }
+        // };
+        //
+        // xhr.send();
+
+        // ES6
+        // fetch('tel.json')
+        //     .then(result => {
+        //         return result.json();
+        //         // console.log(result.json())
+        //     })
+        //     .then(data => {
+        //         document.querySelector('#ajax-block').insertAdjacentHTML('afterbegin', `<p>${data.name} - <strong>${data.tel}</strong></p>`);
+        //
+        //     })
+        //     .catch((error) => console.log(error));
+    });
+</script>
+</body>
+</html>

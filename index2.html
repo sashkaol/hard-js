@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        class EditText {
+            constructor(text) {
+                this.text = text;
+            }
+
+            edit() {
+                const regexp = /^'|'$/g;
+                const reg = /\s'/g;
+                const re = /'\s/g;
+                this.text = this.text.replace(regexp, '"');
+                this.text = this.text.replace(reg, ' "'); 
+                this.text = this.text.replace(re, '" ');
+                return this.text; 
+            }
+        }
+
+        let usertext = prompt('Введите ваш текст', "'help' i don't know 'what did you mean' aren't krjfkrfknr 'hello'");
+
+        let myText = new EditText(usertext);
+        console.log(myText.edit());
+
+    </script>
+</body>
+</html>

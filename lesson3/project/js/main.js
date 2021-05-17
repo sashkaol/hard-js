@@ -25,31 +25,163 @@ var getRequest = (url) => {
   }) 
 }
 
-class CartList extends ProductsList {
-  constructor(cart = '.cart') {
-    this.cart = cart;
-    this._goods = [];
+class Item {
+  constructor(good) {
+    this.id_product = good.id_product;
+    this.product_name = good.product_name;
+    this.price = good.price;
+    this.img = good.img;
+    //this.count = count;
+  }
 
-    this.addToCart();
+  render() {
+    return ``;
   }
 }
 
-class CartGood extends ProductItem {
-  
+class CartItem extends Item {
+  constructor(good) {
+    super(good);
+    this.quantity = 1;
+  }
+
+  render() {
+    return `<div class="cart-item" data-id="${this.id_product}">
+    <div class="product-bio">
+    <img src="${this.img}" alt="Some image">
+    <div class="product-desc">
+    <p class="product-title">${this.product_name}</p>
+    <p class="product-quantity">Количество: ${this.quantity}</p>
+<p class="product-single-price">${this.price} за ед.</p>
+</div>
+</div>
+<div class="right-block">
+    <p class="product-price">${this.quantity * this.price} ₽</p>
+    <button class="del-btn" data-id="${this.id_product}">&times;</button>
+</div>
+</div>`
+  }
 }
 
-class ProductList {
-  constructor(container = '.products') {
-    this.container = container;
-    this._goods = [];
-    this._allProducts = [];
+class ProductItem extends Item {
+  render() {
+    return `<div class="product-item" data-id="${this.id_product}">
+    <img src="${this.img}" alt="Some img">
+    <div class="desc">
+        <h3>${this.product_name}</h3>
+        <p>${this.price} ₽</p>
+        <button class="buy-btn"
+          data-id="${this.id_product}"
+          data-name="${this.product_name}"
+          data-price="${this.price}">Купить</button>
+    </div>
+</div>`;
+  }
+}
 
-    this._fetchGoods();
-    this._render();
+class List {
+  constructor(url, container) {
+    this.container = container;
+    this.goods = [];
+    this.url = url;
+  }
+
+  getJson(url) {
+    return fetch(url ? url : `${API + this.url}`)
+      .then(result => result.json())
+      .catch(error => {
+        alert(error);
+      })
+  }
+
+  render() {
+    this.clear();
+    const container = document.querySelector(this.container);
+    for (let good of this.goods) {
+      container.insertAdjacentHTML('beforeend', good.render());
+    }
+  }
+
+  addProduct(good) {
+    this.goods.push(new this.itemConstructor(good));
+    this.render();
+  }
+
+  removeProduct(good) {
+    for (let i = 0; i < this.goods.length; i++) {
+      console.log(this.goods[i].id_product);
+      if (good.id_product === this.goods[i].id_product) {
+        console.log('find');
+        return this.goods.splice(i, 1);
+      }
+    }
+    return false;
+  }
+
+  searchProduct(good) {
+    for (let i = 0; i < this.goods.length; i++) {
+      console.log(this.goods[i].id_product);
+      if (good.id_product === this.goods[i].id_product) {
+        console.log('find');
+        return this.goods[i];
+      }
+    }
+    return false;
+  }
+
+  clear() {
+    const container = document.querySelector(this.container);
+    while (container.firstChild) {
+      container.removeChild(container.lastChild);
+    }
+  }
+}
+
+class CartList extends List {
+  constructor(url, cart = '.cart-block') {
+    super(url, cart)
+    this.cart = cart;
+    this._goods = [];
+    this.itemConstructor = CartItem;
+
+  }
+
+  render() {
+    super.render.call(this);
+    const container = document.querySelector(this.container);
+    let btns = container.querySelectorAll('.del-btn');
+    [].slice.call(btns).forEach((el, n) => {
+      el.addEventListener('click', () => {
+        debugger
+        let good = this.goods[n];
+        let searchRes = this.searchProduct(good);
+        if (searchRes) {
+          searchRes.quantity--
+          if (searchRes.quantity === 0) {
+            this.removeProduct(searchRes);
+          } else {
+            console.error('fjgm');
+          }
+          this.render();
+        }
+      })
+    });
+  }
+}
+
+class ProductList extends List {
+  constructor(url = "/catalogData.json", container = '.products') {
+    super(url, container);
+    this.goods = [];
+    this._allProducts = [];
+    this.cart = new CartList(); 
+    this.itemConstructor = ProductItem;
+    // this._fetchGoods();
+    // this._render();
     this._getGoods()
         .then((data) => {
-          this._goods = data;
-          this._render();
+          this.goods = data.map(item=>{item.img = 'https://via.placeholder.com/50x100'; return item}).map(item=>new this.itemConstructor(item));
+          this.render();
         });
   }
 
@@ -78,25 +210,24 @@ class ProductList {
       block.insertAdjacentHTML('beforeend', productObject.render());
     }
   }
-}
-
-class ProductItem {
-  constructor(product, img='https://via.placeholder.com/200x150') {
-    this.title = product.product_name;
-    this.price = product.price;
-    this.id = product.id_product;
-    this.img = img;
-  }
 
   render() {
-    return `<div class="product-item" data-id="${this.id}">
-                <img src="${this.img}" alt="Some img">
-                <div class="desc">
-                    <h3>${this.title}</h3>
-                    <p>${this.price} \u20bd</p>
-                    <button class="buy-btn">Купить</button>
-                </div>
-            </div>`;
+    super.render.call(this);
+    const container = document.querySelector(this.container);
+    let btns = container.querySelectorAll('.buy-btn');
+    [].slice.call(btns).forEach((el, n) => {
+      el.addEventListener('click', () => {
+        debugger
+        let good = this.goods[n];
+        let searchRes = this.cart.searchProduct(good);
+        if (searchRes) {
+          searchRes.quantity++
+          this.cart.render();
+        } else {
+          this.cart.addProduct(good);
+        }
+      })
+    });
   }
 }
 
